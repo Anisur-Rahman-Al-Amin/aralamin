@@ -1,6 +1,6 @@
 import { ArrowUpRight, Download, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { profile } from '../data/portfolio'
+import { profile } from '../data/portfolio.ts'
 import { downloadCv } from '../utils/downloadCv'
 
 export function HeroSection() {

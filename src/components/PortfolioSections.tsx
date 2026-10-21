@@ -9,7 +9,7 @@ import {
   researchProjects,
   ventures,
   type Highlight,
-} from '../data/portfolio'
+} from '../data/portfolio.ts'
 
 type SectionHeadingProps = {
   id: string

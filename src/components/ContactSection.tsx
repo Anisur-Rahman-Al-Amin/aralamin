@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Send, Sparkles } from 'lucide-react'
-import { profile } from '../data/portfolio'
+import { profile } from '../data/portfolio.ts'
 
 export function ContactSection() {
   const [formStatus, setFormStatus] = useState('')

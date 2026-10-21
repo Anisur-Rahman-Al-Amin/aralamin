@@ -9,7 +9,7 @@ import {
   VenturesSection,
 } from './components/PortfolioSections'
 import { SiteFooter } from './components/SiteFooter'
-import { profile } from './data/portfolio'
+import { profile } from './data/portfolio.ts'
 import { PortfolioDetailPage } from './pages/PortfolioDetailPage'
 
 function HomePage() {

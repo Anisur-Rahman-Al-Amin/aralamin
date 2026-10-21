@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRight, Download, Menu, X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { profile } from '../data/portfolio'
+import { profile } from '../data/portfolio.ts'
 import { downloadCv } from '../utils/downloadCv'
 
 const navigation = [

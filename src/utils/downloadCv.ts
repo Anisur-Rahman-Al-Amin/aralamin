@@ -8,7 +8,7 @@ import {
   references,
   skills,
   ventures,
-} from '../data/portfolio'
+} from '../data/portfolio.ts'
 
 type CvEntry = {
   title: string

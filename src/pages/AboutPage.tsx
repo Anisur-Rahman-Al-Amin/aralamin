@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { education, profile, skills } from '../data/portfolio'
+import { education, profile, skills } from '../data/portfolio.ts'
 
 export function AboutPage() {
   return (

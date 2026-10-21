@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { HashRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { HeroSection } from './components/HeroSection'
 import { PortfolioHeader } from './components/PortfolioHeader'
 import {
@@ -57,9 +57,9 @@ function PortfolioLayout() {
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <PortfolioLayout />
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 

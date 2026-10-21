@@ -12,7 +12,7 @@ npm run dev
 ```
 
 Create a production build with `npm run build` and preview it with `npm run preview`.
-Section pages use hash routes such as `/#/awards`, so direct navigation works on static GitHub Pages hosting.
+Section pages use clean paths such as `/aralamin/awards`. A generated `404.html` fallback keeps direct links and page refreshes working on GitHub Pages.
 
 ## Personalize
 

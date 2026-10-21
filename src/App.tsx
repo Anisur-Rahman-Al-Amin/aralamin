@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { HeroSection } from './components/HeroSection'
 import { PortfolioHeader } from './components/PortfolioHeader'
@@ -10,7 +10,9 @@ import {
 } from './components/PortfolioSections'
 import { SiteFooter } from './components/SiteFooter'
 import { profile } from './data/portfolio.ts'
-import { PortfolioDetailPage } from './pages/PortfolioDetailPage'
+
+const PortfolioDetailPage = lazy(() => import('./pages/PortfolioDetailPage').then((module) => ({ default: module.PortfolioDetailPage })))
+const AdminPage = lazy(() => import('./pages/AdminPage').then((module) => ({ default: module.AdminPage })))
 
 function HomePage() {
   return (
@@ -44,12 +46,15 @@ function PortfolioLayout() {
     <>
       <button className="skip-link" type="button" onClick={skipToContent}>Skip to content</button>
       <PortfolioHeader />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/:section/:slug" element={<PortfolioDetailPage />} />
-        <Route path="/:section" element={<PortfolioDetailPage />} />
-        <Route path="*" element={<PortfolioDetailPage />} />
-      </Routes>
+      <Suspense fallback={<main className="route-loading" aria-live="polite">Loading page…</main>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/:section/:slug" element={<PortfolioDetailPage />} />
+          <Route path="/:section" element={<PortfolioDetailPage />} />
+          <Route path="*" element={<PortfolioDetailPage />} />
+        </Routes>
+      </Suspense>
       <SiteFooter />
     </>
   )

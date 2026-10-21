@@ -1,76 +1,17 @@
-export type ResearchProject = {
-  title: string
-  description: string
-  field: string
-  period: string
-  status: string
-  url?: string
-}
+import type {
+  Education,
+  Experience,
+  Highlight,
+  PortfolioContent,
+  PortfolioProfile,
+  Publication,
+  Reference,
+  ResearchProject,
+  SkillGroup,
+  Venture,
+} from './portfolioTypes'
 
-export type Publication = {
-  title: string
-  authors: string
-  venue: string
-  year: string
-  status: string
-  tone: 'green' | 'coral' | 'lime'
-  url?: string
-}
-
-export type Experience = {
-  role: string
-  organization: string
-  description: string
-  period: string
-  category: string
-  project?: string
-  url?: string
-  path?: string
-}
-
-export type Venture = {
-  name: string
-  role: string
-  description: string
-  type: string
-  tone: 'green' | 'coral'
-  period: string
-  url?: string
-  path?: string
-}
-
-export type Highlight = {
-  title: string
-  organization: string
-  detail: string
-  period: string
-  category?: string
-  url?: string
-  path?: string
-}
-
-export type Education = {
-  degree: string
-  institution: string
-  period: string
-  details: string[]
-}
-
-export type SkillGroup = {
-  title: string
-  skills: string[]
-}
-
-export type Reference = {
-  name: string
-  title: string
-  department: string
-  institution: string
-  email: string
-  phone: string
-}
-
-export const profile = {
+export const profile: PortfolioProfile = {
   name: 'Anisur Rahman Al Amin',
   initials: 'AR',
   role: 'M.Sc. Researcher in Animal Science | Agri-Entrepreneur',
@@ -114,7 +55,7 @@ export const profile = {
     'English B2, assessed by the British Council',
   ],
   referencesNote: 'References are available on request.',
-} as const
+}
 
 export const education: Education[] = [
   {
@@ -410,3 +351,17 @@ export const references: Reference[] = [
     phone: '+8801933548922',
   },
 ]
+
+export const portfolioContent: PortfolioContent = {
+  profile,
+  education,
+  researchProjects,
+  publications,
+  experience,
+  ventures,
+  awards,
+  certifications,
+  activities,
+  skills,
+  references,
+}

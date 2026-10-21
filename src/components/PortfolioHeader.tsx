@@ -13,6 +13,7 @@ const navigation = [
   { path: '/awards', label: 'Awards' },
   { path: '/certifications', label: 'Certifications' },
   { path: '/activities', label: 'Activities' },
+  { path: '/admin', label: 'Admin' },
 ]
 
 export function PortfolioHeader() {

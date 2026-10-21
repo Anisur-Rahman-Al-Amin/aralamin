@@ -22,6 +22,7 @@ const sectionPaths = [
   '/certifications',
   '/activities',
   '/contact',
+  '/admin',
 ]
 
 const detailPaths = [

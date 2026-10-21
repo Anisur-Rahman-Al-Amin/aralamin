@@ -8,8 +8,8 @@ import {
   publications,
   researchProjects,
   ventures,
-  type Highlight,
 } from '../data/portfolio.ts'
+import type { Highlight } from '../data/portfolioTypes'
 
 type SectionHeadingProps = {
   id: string

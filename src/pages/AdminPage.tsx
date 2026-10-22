@@ -277,9 +277,11 @@ export function AdminPage() {
           {user ? (
             <button className="admin-reset" type="button" onClick={() => signOut(firebaseAuth)}><LogOut size={14} /> Sign out</button>
           ) : null}
-          <button className="admin-reset" type="button" onClick={resetDraft}><RotateCcw size={14} /> Reset</button>
-          {user ? <button className="admin-save" type="button" onClick={saveToMongo}><Save size={15} /> Save live</button> : null}
-          <button className="admin-download" type="button" onClick={downloadContent}><Download size={15} /> Download updates</button>
+          {user ? <>
+            <button className="admin-reset" type="button" onClick={resetDraft}><RotateCcw size={14} /> Reset</button>
+            <button className="admin-save" type="button" onClick={saveToMongo}><Save size={15} /> Save live</button>
+            <button className="admin-download" type="button" onClick={downloadContent}><Download size={15} /> Download updates</button>
+          </> : null}
         </div>
       </header>
       {!user && (
@@ -292,7 +294,7 @@ export function AdminPage() {
           </div>
         </section>
       )}
-      <section className="admin-workspace section-wrap" aria-label="Portfolio content editor">
+      {user ? <section className="admin-workspace section-wrap" aria-label="Portfolio content editor">
         <nav className="admin-sections" aria-label="Content sections">
           {sectionNames.map((item) => (
             <button
@@ -314,8 +316,10 @@ export function AdminPage() {
             onChange={(value) => setContent((current) => ({ ...current, [activeSection]: value }) as PortfolioContent)}
           />
         </div>
-      </section>
-      <p className="admin-publish-note section-wrap">Download the updated data file, replace <code>src/data/portfolio.ts</code>, then run <code>npm run build</code> and push your changes to publish.</p>
+      </section> : null}
+      <p className="admin-publish-note section-wrap">
+        {user ? 'Save live writes to MongoDB. Download updates creates a backup portfolio.ts file.' : 'Sign in to reveal portfolio editing controls.'}
+      </p>
     </main>
   )
 }

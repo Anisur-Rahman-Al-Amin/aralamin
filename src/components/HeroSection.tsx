@@ -1,9 +1,11 @@
 import { ArrowUpRight, Download, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { profile } from '../data/portfolio.ts'
+import { usePortfolioData } from '../data/PortfolioDataProvider'
 import { downloadCv } from '../utils/downloadCv'
 
 export function HeroSection() {
+  const { content } = usePortfolioData()
+  const { profile } = content
   const nameParts = profile.name.split(' ')
   const [primaryRole, secondaryRole = ''] = profile.role.split(' | ')
 
@@ -17,7 +19,7 @@ export function HeroSection() {
         <p className="hero-role">{primaryRole} <span className="role-divider">/</span> {secondaryRole}</p>
         <p className="hero-intro">{profile.introduction}</p>
         <div className="hero-actions">
-          <button className="button button-dark" type="button" onClick={downloadCv}>
+          <button className="button button-dark" type="button" onClick={() => downloadCv(content)}>
             <Download size={15} aria-hidden="true" /> Download CV
           </button>
           <Link className="text-link" to="/contact">Get in touch <ArrowUpRight size={15} aria-hidden="true" /></Link>

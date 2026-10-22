@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "anisur-rahman-portfolio"
+  },
+  "targets": {
+    "anisur-rahman-portfolio": {
+      "hosting": {
+        "anisur-rahman-al-amin": [
+          "anisur-rahman-al-amin"
+        ]
+      }
+    }
+  }
+}

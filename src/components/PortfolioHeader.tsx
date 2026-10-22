@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRight, Download, Menu, X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { profile } from '../data/portfolio.ts'
+import { usePortfolioData } from '../data/PortfolioDataProvider'
 import { downloadCv } from '../utils/downloadCv'
 
 const navigation = [
@@ -17,6 +17,8 @@ const navigation = [
 ]
 
 export function PortfolioHeader() {
+  const { content } = usePortfolioData()
+  const { profile } = content
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
 
@@ -72,7 +74,7 @@ export function PortfolioHeader() {
         >
           Contact <ArrowUpRight size={14} aria-hidden="true" />
         </NavLink>
-        <button className="header-cv" type="button" onClick={downloadCv}>
+        <button className="header-cv" type="button" onClick={() => downloadCv(content)}>
           <Download size={14} aria-hidden="true" /> Download CV
         </button>
       </nav>

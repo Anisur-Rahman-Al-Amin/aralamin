@@ -5,3 +5,6 @@ dist/
 !.env.example
 *.log
 *.tsbuildinfo
+functions/.secret.local
+functions/.env*
+!functions/.env.example

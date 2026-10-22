@@ -1,14 +1,4 @@
-import {
-  awards,
-  certifications,
-  education,
-  experience,
-  profile,
-  publications,
-  references,
-  skills,
-  ventures,
-} from '../data/portfolio.ts'
+import type { PortfolioContent } from '../data/portfolioTypes'
 
 type CvEntry = {
   title: string
@@ -17,8 +7,9 @@ type CvEntry = {
   detail?: string
 }
 
-export async function downloadCv() {
+export async function downloadCv(content: PortfolioContent) {
   const { jsPDF } = await import('jspdf')
+  const { awards, certifications, education, experience, profile, publications, references, skills, ventures } = content
   const pdf = new jsPDF()
   const pageWidth = pdf.internal.pageSize.getWidth()
   const pageHeight = pdf.internal.pageSize.getHeight()

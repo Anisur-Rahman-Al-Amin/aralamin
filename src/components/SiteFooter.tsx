@@ -1,8 +1,10 @@
 import { ArrowDownRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { profile } from '../data/portfolio.ts'
+import { usePortfolioData } from '../data/PortfolioDataProvider'
 
 export function SiteFooter() {
+  const { content } = usePortfolioData()
+  const { profile } = content
   return (
     <footer className="site-footer section-wrap">
       <Link className="footer-name" to="/">{profile.name}<span>.</span></Link>

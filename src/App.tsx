@@ -9,7 +9,7 @@ import {
   VenturesSection,
 } from './components/PortfolioSections'
 import { SiteFooter } from './components/SiteFooter'
-import { profile } from './data/portfolio.ts'
+import { PortfolioDataProvider, usePortfolioData } from './data/PortfolioDataProvider'
 
 const PortfolioDetailPage = lazy(() => import('./pages/PortfolioDetailPage').then((module) => ({ default: module.PortfolioDetailPage })))
 const AdminPage = lazy(() => import('./pages/AdminPage').then((module) => ({ default: module.AdminPage })))
@@ -28,6 +28,8 @@ function HomePage() {
 
 function PortfolioLayout() {
   const location = useLocation()
+  const { content } = usePortfolioData()
+  const { profile } = content
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -62,9 +64,11 @@ function PortfolioLayout() {
 
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <PortfolioLayout />
-    </BrowserRouter>
+    <PortfolioDataProvider>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <PortfolioLayout />
+      </BrowserRouter>
+    </PortfolioDataProvider>
   )
 }
 

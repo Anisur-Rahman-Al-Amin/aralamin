@@ -2,16 +2,9 @@ import { useEffect, useState } from 'react'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { ContactSection } from '../components/ContactSection'
+import { usePortfolioData } from '../data/PortfolioDataProvider'
+import type { PortfolioContent } from '../data/portfolioTypes'
 import { AboutPage } from './AboutPage'
-import {
-  activities,
-  awards,
-  certifications,
-  experience,
-  publications,
-  researchProjects,
-  ventures,
-} from '../data/portfolio.ts'
 
 type PageItem = {
   title: string
@@ -35,7 +28,9 @@ type PageDefinition = {
   filters?: string[]
 }
 
-const pages: Record<string, PageDefinition> = {
+function createPages(content: PortfolioContent): Record<string, PageDefinition> {
+  const { activities, awards, certifications, experience, publications, researchProjects, ventures } = content
+  return {
   research: {
     index: '01',
     eyebrow: 'Inquiry',
@@ -139,6 +134,7 @@ const pages: Record<string, PageDefinition> = {
       meta: item.organization,
     })),
   },
+  }
 }
 
 function NotFoundPage() {
@@ -152,6 +148,7 @@ function NotFoundPage() {
 }
 
 export function PortfolioDetailPage() {
+  const { content } = usePortfolioData()
   const { section, slug } = useParams()
   const [activeFilter, setActiveFilter] = useState('All')
 
@@ -166,7 +163,7 @@ export function PortfolioDetailPage() {
     return <main id="main"><ContactSection /></main>
   }
 
-  const page = section ? pages[section] : undefined
+  const page = section ? createPages(content)[section] : undefined
   if (!page) return <NotFoundPage />
   if (slug) {
     const item = page.items.find((entry) => entry.path?.split('/').at(-1) === slug)

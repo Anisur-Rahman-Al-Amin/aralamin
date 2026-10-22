@@ -12,19 +12,28 @@ npm run dev
 ```
 
 Create a production build with `npm run build` and preview it with `npm run preview`.
-Section pages use clean paths such as `/aralamin/awards`. A generated `404.html` fallback keeps direct links and page refreshes working on GitHub Pages.
+Firebase Hosting serves clean paths such as `/awards`, and rewrites `/api/portfolio` to the protected Cloud Function.
 
 ## Update content
 
-Open `/aralamin/admin`, choose a section, and edit its fields. Drafts are saved only in that browser. Select **Download updates** to create a replacement `portfolio.ts`; copy it over `src/data/portfolio.ts`, run `npm run build`, then commit and push to publish. The admin page does not store credentials or publish directly.
+Open `/admin`, sign in with the Firebase Auth user, edit a section, and select **Save live** to write the content to MongoDB. Drafts are also saved in that browser. **Download updates** remains available as a backup export.
 
 ## Personalize
 
 Edit `src/data/portfolio.ts` to update the profile, research, publication, experience, award, certification, and activity content used by the pages and generated CV. Add or replace a portrait under `public/` and update `profile.imageUrl`. The existing contact email and profile links are configured in the same file.
 
-Open `/aralamin/admin` to edit content in the browser. Drafts stay in that browser. Select **Download updates**, replace `src/data/portfolio.ts` with the downloaded file, run `npm run build`, then commit and push to publish. The static admin does not publish directly and does not store GitHub credentials.
-
 Place images and documents you are authorized to use in `public/` and update the matching content values.
+
+## Firebase and MongoDB setup
+
+1. In Firebase Authentication, enable Email/Password and create the admin user. Do not put the password in source control.
+2. In MongoDB Atlas, create the `Anisur-Rahman` database and `portfolio` collection. Use a least-privilege database user and restrict network access appropriately.
+3. Set the server-only Mongo URI with `firebase functions:secrets:set MONGODB_URI`.
+4. Sign in at `/admin` and select **Save live** once to initialize the `published` document.
+5. For GitHub Actions deployment, add a repository secret named `FIREBASE_SERVICE_ACCOUNT` containing a Firebase deploy service-account JSON document.
+6. Deploy locally with `npx firebase-tools deploy --project anisur-rahman-portfolio --only hosting,functions` after authenticating with `firebase login`.
+
+Firebase web configuration is public app metadata. MongoDB credentials and service-account JSON must remain in Secret Manager/GitHub Actions secrets.
 
 ## Code map
 
@@ -36,6 +45,9 @@ Place images and documents you are authorized to use in `public/` and update the
 - `src/components/SiteFooter.tsx` renders the footer.
 - `src/pages/PortfolioDetailPage.tsx` renders each section route from shared data.
 - `src/pages/AdminPage.tsx` edits local drafts and exports the typed portfolio data module.
+- `src/lib/firebase.ts` initializes Firebase Auth and Analytics.
+- `src/lib/portfolioApi.ts` calls the Mongo-backed Cloud Function.
+- `functions/index.js` verifies Firebase ID tokens and reads/writes MongoDB.
 - `src/pages/AdminPage.tsx` edits portfolio content locally and exports the typed data module.
 - `src/data/portfolio.ts` is the single source for editable profile and portfolio entries.
 - `src/utils/downloadCv.ts` generates the academic-style CV PDF.

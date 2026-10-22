@@ -1,14 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import {
-  activities,
-  awards,
-  certifications,
-  experience,
-  publications,
-  researchProjects,
-  ventures,
-} from '../data/portfolio.ts'
+import { usePortfolioData } from '../data/PortfolioDataProvider'
 import type { Highlight } from '../data/portfolioTypes'
 
 type SectionHeadingProps = {
@@ -37,6 +29,8 @@ function SectionHeading({ id, index, label, title, accent, action }: SectionHead
 }
 
 export function ResearchSection() {
+  const { content } = usePortfolioData()
+  const { researchProjects } = content
   return (
     <section className="content-section section-wrap" id="research" aria-labelledby="research-title">
       <SectionHeading id="research-title" index="" label="" title="Current" accent="research" action={{ label: 'All research projects', to: '/research' }} />
@@ -55,6 +49,8 @@ export function ResearchSection() {
 }
 
 export function PublicationsSection() {
+  const { content } = usePortfolioData()
+  const { publications } = content
   return (
     <section className="publication-section" id="publications" aria-labelledby="publications-title">
       <div className="section-wrap publication-inner">
@@ -88,6 +84,8 @@ export function PublicationsSection() {
 }
 
 export function ExperienceSection() {
+  const { content } = usePortfolioData()
+  const { experience } = content
   const groups = [...new Set(experience.map((item) => item.category))]
 
   return (
@@ -118,6 +116,8 @@ export function ExperienceSection() {
 }
 
 export function VenturesSection() {
+  const { content } = usePortfolioData()
+  const { ventures } = content
   return (
     <section className="venture-section" id="ventures" aria-labelledby="ventures-title">
       <div className="section-wrap">
@@ -165,6 +165,8 @@ function HighlightsSection({ id, index, label, title, items }: {
 }
 
 export function RecognitionSections() {
+  const { content } = usePortfolioData()
+  const { awards, certifications, activities } = content
   return (
     <>
       <HighlightsSection id="awards" index="05" label="Recognition" title="Awards" items={awards} />

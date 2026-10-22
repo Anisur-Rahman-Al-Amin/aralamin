@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Download, RotateCcw } from 'lucide-react'
+import { Download, LogIn, LogOut, RotateCcw, Save } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { portfolioContent } from '../data/portfolio.ts'
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth'
+import { firebaseAuth } from '../lib/firebase.ts'
+import { usePortfolioData } from '../data/PortfolioDataProvider'
 import type { PortfolioContent } from '../data/portfolioTypes'
 
 type EditableValue = string | number | boolean | null | EditableValue[] | { [key: string]: EditableValue }
@@ -192,19 +194,25 @@ function createDataModule(content: PortfolioContent) {
   return `${importLine}\n\n${declarations.join('\n\n')}\n\nexport const portfolioContent: PortfolioContent = {\n${Object.keys(content).map((key) => `  ${key},`).join('\n')}\n}\n`
 }
 
-function loadDraft(): PortfolioContent {
+function loadDraft(fallback: PortfolioContent): PortfolioContent {
   try {
     const saved = localStorage.getItem('aralamin-portfolio-draft')
-    return saved ? JSON.parse(saved) as PortfolioContent : structuredClone(portfolioContent)
+    return saved ? JSON.parse(saved) as PortfolioContent : structuredClone(fallback)
   } catch {
-    return structuredClone(portfolioContent)
+    return structuredClone(fallback)
   }
 }
 
 export function AdminPage() {
-  const [content, setContent] = useState<PortfolioContent>(loadDraft)
+  const { content: publishedContent, save } = usePortfolioData()
+  const [content, setContent] = useState<PortfolioContent>(() => loadDraft(publishedContent))
+  const [user, setUser] = useState<User | null>(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [activeSection, setActiveSection] = useState<SectionKey>('profile')
   const [status, setStatus] = useState('Draft saves in this browser.')
+
+  useEffect(() => onAuthStateChanged(firebaseAuth, setUser), [])
 
   useEffect(() => {
     try {
@@ -227,6 +235,26 @@ export function AdminPage() {
     setStatus('Downloaded portfolio.ts. Replace src/data/portfolio.ts, then build and push to publish.')
   }
 
+  async function signIn() {
+    try {
+      await signInWithEmailAndPassword(firebaseAuth, email, password)
+      setPassword('')
+      setStatus('Signed in. You can save changes to MongoDB.')
+    } catch {
+      setStatus('Sign-in failed. Check Firebase Auth and your credentials.')
+    }
+  }
+
+  async function saveToMongo() {
+    if (!user) return
+    try {
+      await save(content, await user.getIdToken())
+      setStatus('Saved to MongoDB and published content is updated.')
+    } catch {
+      setStatus('Save failed. Check the Cloud Function and MongoDB secret.')
+    }
+  }
+
   function resetDraft() {
     let storageAvailable = true
     try {
@@ -234,7 +262,7 @@ export function AdminPage() {
     } catch {
       storageAvailable = false
     }
-    setContent(structuredClone(portfolioContent))
+    setContent(structuredClone(publishedContent))
     setStatus(storageAvailable
       ? 'Draft reset to the published content.'
       : 'Local draft storage is unavailable; restored the published content in this session.')
@@ -246,10 +274,24 @@ export function AdminPage() {
         <div><p className="eyebrow">Portfolio editor</p><h1>Update your <span>portfolio.</span></h1></div>
         <div className="admin-actions">
           <Link className="admin-preview" to="/">View site</Link>
+          {user ? (
+            <button className="admin-reset" type="button" onClick={() => signOut(firebaseAuth)}><LogOut size={14} /> Sign out</button>
+          ) : null}
           <button className="admin-reset" type="button" onClick={resetDraft}><RotateCcw size={14} /> Reset</button>
+          {user ? <button className="admin-save" type="button" onClick={saveToMongo}><Save size={15} /> Save live</button> : null}
           <button className="admin-download" type="button" onClick={downloadContent}><Download size={15} /> Download updates</button>
         </div>
       </header>
+      {!user && (
+        <section className="admin-login section-wrap" aria-labelledby="admin-login-title">
+          <div><p className="eyebrow">Protected publishing</p><h2 id="admin-login-title">Sign in to <span>save live.</span></h2></div>
+          <div className="admin-login-fields">
+            <label className="admin-field"><span>Email</span><input type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="username" /></label>
+            <label className="admin-field"><span>Password</span><input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" /></label>
+            <button className="admin-download" type="button" onClick={signIn}><LogIn size={15} /> Sign in</button>
+          </div>
+        </section>
+      )}
       <section className="admin-workspace section-wrap" aria-label="Portfolio content editor">
         <nav className="admin-sections" aria-label="Content sections">
           {sectionNames.map((item) => (

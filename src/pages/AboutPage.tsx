@@ -1,8 +1,10 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { education, profile, skills } from '../data/portfolio.ts'
+import { usePortfolioData } from '../data/PortfolioDataProvider'
 
 export function AboutPage() {
+  const { content } = usePortfolioData()
+  const { education, profile, skills } = content
   return (
     <main id="main" className="about-page">
       <section className="about-hero section-wrap">

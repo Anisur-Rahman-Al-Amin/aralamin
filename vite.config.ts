@@ -54,6 +54,6 @@ function githubPagesFallback() {
 }
 
 export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/aralamin/' : '/',
+  base: '/',
   plugins: [react(), githubPagesFallback()],
 }))

@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react'
 import { Send, Sparkles } from 'lucide-react'
-import { profile } from '../data/portfolio.ts'
+import { usePortfolioData } from '../data/PortfolioDataProvider'
 
 export function ContactSection() {
+  const { content } = usePortfolioData()
+  const { profile } = content
   const [formStatus, setFormStatus] = useState('')
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {

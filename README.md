@@ -31,7 +31,7 @@ Place images and documents you are authorized to use in `public/` and update the
 3. Set the server-only Mongo URI with `firebase functions:secrets:set MONGODB_URI`.
 4. Sign in at `/admin` and select **Save live** once to initialize the `published` document.
 5. For GitHub Actions deployment, add a repository secret named `FIREBASE_SERVICE_ACCOUNT` containing a Firebase deploy service-account JSON document.
-6. Add these GitHub repository variables from `.env`: `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, and `VITE_FIREBASE_MEASUREMENT_ID`.
+6. Optional: add the `VITE_FIREBASE_*` values from `.env` as GitHub repository variables to override the public defaults.
 7. Deploy locally with `npx firebase-tools deploy --project anisur-rahman-portfolio --only hosting,functions` after authenticating with `firebase login`.
 
 Firebase web configuration is public app metadata. MongoDB credentials and service-account JSON must remain in Secret Manager/GitHub Actions secrets.

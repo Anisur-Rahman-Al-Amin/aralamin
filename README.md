@@ -30,9 +30,7 @@ Place images and documents you are authorized to use in `public/` and update the
 2. In MongoDB Atlas, create the `Anisur-Rahman` database and `portfolio` collection. Use a least-privilege database user and restrict network access appropriately.
 3. Set the server-only Mongo URI with `firebase functions:secrets:set MONGODB_URI`.
 4. Sign in at `/admin` and select **Save live** once to initialize the `published` document.
-5. For GitHub Actions deployment, add a repository secret named `FIREBASE_SERVICE_ACCOUNT` containing a Firebase deploy service-account JSON document.
-6. Optional: add the `VITE_FIREBASE_*` values from `.env` as GitHub repository variables to override the public defaults.
-7. Deploy locally with `npx firebase-tools deploy --project anisur-rahman-portfolio --only hosting,functions` after authenticating with `firebase login`.
+5. Deploy locally with `npx firebase-tools deploy --project anisur-rahman-portfolio --only hosting,functions` after authenticating with `firebase login`.
 
 Firebase web configuration is public app metadata. MongoDB credentials and service-account JSON must remain in Secret Manager/GitHub Actions secrets.
 
@@ -45,13 +43,10 @@ Firebase web configuration is public app metadata. MongoDB credentials and servi
 - `src/components/ContactSection.tsx` handles the contact form.
 - `src/components/SiteFooter.tsx` renders the footer.
 - `src/pages/PortfolioDetailPage.tsx` renders each section route from shared data.
-- `src/pages/AdminPage.tsx` edits local drafts and exports the typed portfolio data module.
 - `src/lib/firebase.ts` initializes Firebase Auth and Analytics.
 - `src/lib/portfolioApi.ts` calls the Mongo-backed Cloud Function.
 - `functions/index.js` verifies Firebase ID tokens and reads/writes MongoDB.
-- `src/pages/AdminPage.tsx` edits portfolio content locally and exports the typed data module.
 - `src/data/portfolio.ts` is the single source for editable profile and portfolio entries.
 - `src/utils/downloadCv.ts` generates the academic-style CV PDF.
 - `styles.css` contains responsive design tokens and component styles.
 
-# aralamin

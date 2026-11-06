@@ -1,6 +1,6 @@
 # Anisur Rahman Al Amin Portfolio
 
-Responsive React portfolio built with Vite, TypeScript, and Lucide icons.
+Responsive React portfolio built with Vite, TypeScript, Lucide icons, and Tailwind CSS. Use Tailwind utilities for new UI while keeping shared design tokens in `styles.css`.
 
 ## Run locally
 

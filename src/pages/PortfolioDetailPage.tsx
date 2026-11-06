@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { ContactSection } from '../components/ContactSection'
@@ -151,6 +151,7 @@ export function PortfolioDetailPage() {
   const { content } = usePortfolioData()
   const { section, slug } = useParams()
   const [activeFilter, setActiveFilter] = useState('All')
+  const pages = useMemo(() => createPages(content), [content])
 
   useEffect(() => {
     setActiveFilter('All')
@@ -163,7 +164,7 @@ export function PortfolioDetailPage() {
     return <main id="main"><ContactSection /></main>
   }
 
-  const page = section ? createPages(content)[section] : undefined
+  const page = section ? pages[section] : undefined
   if (!page) return <NotFoundPage />
   if (slug) {
     const item = page.items.find((entry) => entry.path?.split('/').at(-1) === slug)

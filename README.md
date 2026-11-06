@@ -12,7 +12,7 @@ npm run dev
 ```
 
 Create a production build with `npm run build` and preview it with `npm run preview`.
-Firebase Hosting serves clean paths such as `/awards`, and rewrites `/api/portfolio` to the protected Cloud Function. GitHub Pages is also deployed from the Vite `dist` artifact.
+Firebase Hosting serves clean paths such as `/awards`, and rewrites `/api/portfolio` to the protected Cloud Function.
 
 ## Update content
 
@@ -32,7 +32,7 @@ Place images and documents you are authorized to use in `public/` and update the
 4. Sign in at `/admin` and select **Save live** once to initialize the `published` document.
 5. Deploy locally with `npx firebase-tools deploy --project anisur-rahman-portfolio --only hosting,functions` after authenticating with `firebase login`.
 
-Firebase web configuration is public app metadata. MongoDB credentials and service-account JSON must remain in Secret Manager/GitHub Actions secrets.
+Firebase web configuration is public app metadata. MongoDB credentials must remain in Firebase Secret Manager.
 
 ## Code map
 

@@ -41,11 +41,14 @@ export function HeroSection() {
             </div>
           )}
         </div>
-        <div className="curve-scene" aria-hidden="true">
-          <span className="curve curve-back" />
-          <span className="curve curve-mid" />
-          <span className="curve curve-front" />
-          <span className="curve-core"><Sparkles size={21} /></span>
+        <div className="hero-3d-scene" aria-hidden="true">
+          <div className="hero-orbit hero-orbit-one" />
+          <div className="hero-orbit hero-orbit-two" />
+          <div className="hero-orbit hero-orbit-three" />
+          <div className="hero-core"><Sparkles size={22} /></div>
+          <span className="hero-node hero-node-one" />
+          <span className="hero-node hero-node-two" />
+          <span className="hero-node hero-node-three" />
         </div>
       </div>
     </section>

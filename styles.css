@@ -624,3 +624,31 @@ main:focus { outline: none; }
   .admin-fields { grid-template-columns: 1fr; }
   .admin-editor-heading { align-items: flex-start; flex-direction: column; }
 }
+
+/* Lightweight 3D language: CSS perspective keeps the hero expressive without a WebGL runtime. */
+.hero-3d-scene { position: absolute; z-index: 3; right: -14%; bottom: -8%; width: 126%; aspect-ratio: 1; perspective: 900px; pointer-events: none; transform-style: preserve-3d; }
+.hero-orbit { position: absolute; inset: 14%; border: 1px solid #7b1c2e55; border-radius: 50%; box-shadow: 0 15px 35px #7b1c2e12, inset 0 0 18px #7b1c2e14; transform-style: preserve-3d; }
+.hero-orbit-one { animation: orbit-drift-one 16s linear infinite; transform: rotateX(68deg) rotateY(-27deg) rotateZ(-25deg) scaleY(.78); }
+.hero-orbit-two { inset: 3% 20%; border-color: #7b1c2e88; animation: orbit-drift-two 19s linear infinite reverse; transform: rotateX(57deg) rotateY(44deg) rotateZ(52deg) scaleY(.72); }
+.hero-orbit-three { inset: 23% 1%; border-color: #d7a2ad; animation: orbit-drift-three 22s linear infinite; transform: rotateX(70deg) rotateY(-49deg) rotateZ(78deg) scaleY(.82); }
+.hero-core { position: absolute; top: 50%; left: 50%; width: 58px; height: 58px; display: grid; place-items: center; border: 1px solid #fff; border-radius: 50%; color: #fff; background: radial-gradient(circle at 30% 25%, #c88999, #7b1c2e 54%, #3e0f1b); box-shadow: 0 20px 38px #7b1c2e44, inset -8px -10px 15px #1e0710aa, inset 5px 5px 10px #ffffff55; transform: translate(-50%, -50%) translateZ(42px); }
+.hero-node { position: absolute; width: 10px; height: 10px; border: 2px solid #fff; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px #7b1c2e1f, 0 8px 18px #7b1c2e33; }
+.hero-node-one { top: 18%; left: 20%; animation: node-float-one 5s ease-in-out infinite; }
+.hero-node-two { right: 12%; bottom: 23%; width: 7px; height: 7px; animation: node-float-two 6s ease-in-out infinite; }
+.hero-node-three { top: 46%; right: 4%; width: 5px; height: 5px; animation: node-float-three 4s ease-in-out infinite; }
+@keyframes orbit-drift-one { from { transform: rotateX(68deg) rotateY(-27deg) rotateZ(-25deg) scaleY(.78); } to { transform: rotateX(68deg) rotateY(-27deg) rotateZ(335deg) scaleY(.78); } }
+@keyframes orbit-drift-two { from { transform: rotateX(57deg) rotateY(44deg) rotateZ(52deg) scaleY(.72); } to { transform: rotateX(57deg) rotateY(44deg) rotateZ(-308deg) scaleY(.72); } }
+@keyframes orbit-drift-three { from { transform: rotateX(70deg) rotateY(-49deg) rotateZ(78deg) scaleY(.82); } to { transform: rotateX(70deg) rotateY(-49deg) rotateZ(438deg) scaleY(.82); } }
+@keyframes node-float-one { 50% { transform: translate3d(9px, -12px, 30px); } }
+@keyframes node-float-two { 50% { transform: translate3d(-10px, 7px, 18px); } }
+@keyframes node-float-three { 50% { transform: translate3d(6px, 10px, 25px); } }
+.research-item, .publication-row, .timeline-entry, .venture-card, .highlight-row { transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease; transform-style: preserve-3d; }
+.research-item:hover, .publication-row:hover, .timeline-entry:hover, .venture-card:hover, .highlight-row:hover { transform: translateY(-4px) rotateX(.6deg); box-shadow: 0 14px 28px #7b1c2e0d; }
+@media (max-width: 640px) {
+  .hero-3d-scene { right: -20%; bottom: -4%; width: 125%; }
+  .hero-core { width: 46px; height: 46px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-orbit, .hero-node { animation: none; }
+  .research-item, .publication-row, .timeline-entry, .venture-card, .highlight-row { transition: none; }
+}

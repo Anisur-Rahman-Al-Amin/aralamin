@@ -654,3 +654,33 @@ main:focus { outline: none; }
   .hero-orbit, .hero-node { animation: none; }
   .research-item, .publication-row, .timeline-entry, .venture-card, .highlight-row { transition: none; }
 }
+
+/* Ocean theme overrides: one palette keeps every section visually coherent. */
+:root {
+  --green: #075985;
+  --green-soft: #dff4fb;
+  --coral: #0e7490;
+  --lime: #d8f3fa;
+  --paper-deep: #f0f9fc;
+  --line: #cfe7ef;
+  --muted: #526b75;
+}
+.primary-nav a:hover, .primary-nav a:focus-visible { color: var(--coral); }
+.header-cv:hover, .button-dark:hover { background: #064664; }
+h1 span, h2 span, .contact-section h2 span { color: var(--green); }
+.curve, .hero-orbit { border-color: #0e749088; }
+.curve-mid, .hero-orbit-two { border-color: var(--green); }
+.hero-core { background: radial-gradient(circle at 30% 25%, #64c7df, #075985 54%, #04324c); box-shadow: 0 20px 38px #07598544, inset -8px -10px 15px #032235aa, inset 5px 5px 10px #ffffff55; }
+.hero-node { background: var(--green); box-shadow: 0 0 0 5px #0759851f, 0 8px 18px #07598533; }
+.item-tag, .timeline-type { background: #e6f5f9; }
+.venture-card-green { background: #f1fbfd; }
+.venture-card-coral { background: #e4f6fa; }
+.admin-download, .admin-save { background: var(--green); }
+.admin-auth-switch { color: var(--green); }
+.contact-methods a, .contact-methods span { color: var(--ink); }
+.hero-intro, .route-introduction, .about-story-copy { font-size: 16px; }
+.eyebrow, .section-kicker, .strip-label, .admin-field, .admin-editor-heading [role="status"] { font-size: 12px; }
+.text-link, .button, .header-cv { font-size: 13px; }
+.research-item p, .publication-body p, .timeline-detail, .route-item p { font-size: 14px; }
+.publication-status, .timeline-date, .item-meta, .venture-role, .venture-card-top, .route-item-topline { font-size: 11px; }
+.site-footer p, .footer-copy, .back-top, .contact-note { font-size: 11px; }

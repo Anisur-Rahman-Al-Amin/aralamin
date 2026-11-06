@@ -12,7 +12,7 @@ npm run dev
 ```
 
 Create a production build with `npm run build` and preview it with `npm run preview`.
-Firebase Hosting serves clean paths such as `/awards`, and rewrites `/api/portfolio` to the protected Cloud Function.
+Firebase Hosting serves clean paths such as `/awards`, and rewrites `/api/portfolio` to the protected Cloud Function. GitHub Pages is also deployed from the Vite `dist` artifact.
 
 ## Update content
 

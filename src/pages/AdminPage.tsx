@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Download, LogIn, LogOut, RotateCcw, Save } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth'
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signOut,
+  type User,
+} from 'firebase/auth'
 import { firebaseAuth } from '../lib/firebase.ts'
 import { usePortfolioData } from '../data/PortfolioDataProvider'
 import type { PortfolioContent } from '../data/portfolioTypes'
@@ -209,6 +216,7 @@ export function AdminPage() {
   const [user, setUser] = useState<User | null>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin')
   const [activeSection, setActiveSection] = useState<SectionKey>('profile')
   const [status, setStatus] = useState('Draft saves in this browser.')
 
@@ -235,13 +243,22 @@ export function AdminPage() {
     setStatus('Downloaded portfolio.ts. Replace src/data/portfolio.ts, then build and push to publish.')
   }
 
-  async function signIn() {
+  async function authenticate() {
     try {
-      await signInWithEmailAndPassword(firebaseAuth, email, password)
-      setPassword('')
-      setStatus('Signed in. You can save changes to MongoDB.')
+      if (authMode === 'signup') {
+        const credentials = await createUserWithEmailAndPassword(firebaseAuth, email, password)
+        await sendEmailVerification(credentials.user)
+        await signOut(firebaseAuth)
+        setStatus('Account created. Verify your email, then sign in.')
+      } else {
+        await signInWithEmailAndPassword(firebaseAuth, email, password)
+        setPassword('')
+        setStatus('Signed in. You can save changes to MongoDB.')
+      }
     } catch {
-      setStatus('Sign-in failed. Check Firebase Auth and your credentials.')
+      setStatus(authMode === 'signup'
+        ? 'Sign-up failed. Use a valid email and a Firebase-compliant password.'
+        : 'Sign-in failed. Check Firebase Auth and your credentials.')
     }
   }
 
@@ -286,11 +303,16 @@ export function AdminPage() {
       </header>
       {!user && (
         <section className="admin-login section-wrap" aria-labelledby="admin-login-title">
-          <div><p className="eyebrow">Protected publishing</p><h2 id="admin-login-title">Sign in to <span>save live.</span></h2></div>
+          <div><p className="eyebrow">Protected publishing</p><h2 id="admin-login-title">{authMode === 'signup' ? 'Create an admin account.' : <>Sign in to <span>save live.</span></>}</h2></div>
           <div className="admin-login-fields">
             <label className="admin-field"><span>Email</span><input type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="username" /></label>
             <label className="admin-field"><span>Password</span><input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" /></label>
-            <button className="admin-download" type="button" onClick={signIn}><LogIn size={15} /> Sign in</button>
+            <button className="admin-download" type="button" onClick={authenticate}>
+              <LogIn size={15} /> {authMode === 'signup' ? 'Create account' : 'Sign in'}
+            </button>
+            <button className="admin-auth-switch" type="button" onClick={() => setAuthMode(authMode === 'signup' ? 'signin' : 'signup')}>
+              {authMode === 'signup' ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
+            </button>
           </div>
         </section>
       )}

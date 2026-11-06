@@ -608,6 +608,8 @@ main:focus { outline: none; }
 .admin-toggle-field input { accent-color: var(--green); }
 .admin-publish-note { padding-top: 20px; color: var(--muted); font: 11px/1.7 "DM Sans", sans-serif; }
 .admin-publish-note code { color: var(--green); }
+.admin-auth-switch { padding: 6px 0; border: 0; color: var(--green); background: transparent; font: 600 10px "DM Sans", sans-serif; cursor: pointer; }
+.admin-auth-switch:hover { text-decoration: underline; }
 @media (max-width: 800px) {
   .admin-header { align-items: flex-start; flex-direction: column; }
   .admin-workspace { grid-template-columns: 1fr; gap: 20px; }
